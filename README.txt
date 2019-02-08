@@ -1,0 +1,1 @@
+This directory contains the Reinforcement Learning for Tic Tac Toe.
