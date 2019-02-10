@@ -1,16 +1,18 @@
+#
+# Copyright 2019 Asutosh Nayak. All rights reserved.
+#
+
 """
 This script is the entry point for this application. This instantiates the Board
 and start the game play/training. 
 """
+from src.Board import Board
+# from src.QTPlayer import QTPlayer
+# from src.OtherPlayer import OtherPlayer
 
-import Board
-import QTPlayer
-import OtherPlayer
+# q_player = QTPlayer.QTPlayer()
+# o_player = OtherPlayer.OtherPlayer()
 
-class Main:
-	def __init__(self):
-		self.q_player = new QTPlayer()
-		self.o_player = new OtherPlayer()
-		self.board = new Board(self.q_player, self.o_player)
-		self.board.start_play()
-		print("------Game Finished------")
+board = Board()
+board.start_play()
+print("------Game Finished------")
