@@ -12,11 +12,17 @@ import Board
 OUTPUT_PATH = ".\\output\\"
 OUTPUT_FILE_NAME = "q_table.pickle"
 
+WIN_VALUE = 10.0
+DRAW_VALUE = 5.0
+LOSE_VALUE = 0.0
+
 class QTPlayer(PlayerBase):
+
+	MIN_Q_VALUE = -9999
 
 	def __init__(self, alpha=0.9, gamma=0.95, q_init=0.6):
 		self.q_table = {} # type: Dict[string, [float]]. Stores QValues for all possible actions for each state of the board.
-		self.moves_history = []
+		self.moves_history = [] # type: [(board_hash: int, move: int)] , 
 		self.alpha = alpha
 		self.gamma = gamma
 		self.q_init = q_init
@@ -42,8 +48,17 @@ class QTPlayer(PlayerBase):
 		q_vals = self.get_q_value(board_hash)
 		check_count = 0
 		while check_count < Board.NUM_CELLS:
-			move = np.argmax(q_vals)
-			if(board.is)
+			move = np.argmax(q_vals) # gives action/cell which has max Q-Value
+			if(board.is_move_valid(move)):
+				self.moves_history.append((board_hash,move))
+				return move
+			q_vals[move] = MIN_Q_VALUE
+			check_count = check_count + 1
+
+		# if no move found among q_vals, which shouldn't happen because 'make_move' is called after checking if EMPTY cells are available
+		raise Exception("No valid moves found")
+		print("Q-Values",q_vals,"\n",board_hash,"\n",str(board.board))
+
 
 
 	def get_q_value(self, board_hash: int):
@@ -58,4 +73,20 @@ class QTPlayer(PlayerBase):
 
 	def update_q_table(self):
 		pass
+
+	def match_over(self, match_result: int):
+		"""
+		Match is over. Update the Q-Learning Table as for all the moves in move history
+		"""
+		self.moves_history.reverse()
+		final_val = -1 # final state should be WIN_VALUE if q_player won else other values
+		if(match_result == Board.WIN_X):
+			final_val = WIN_VALUE
+		elif(match_result == Board.WIN_O):
+			final_val = LOSE_VALUE
+		else:
+			final_val = DRAW_VALUE
+
+		
+
 
