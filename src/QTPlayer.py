@@ -36,6 +36,7 @@ class QTPlayer(PlayerBase):
     def save_table(self):
         """ saves the q_table into 'output' folder of application. """
         pickle.dump(self.q_table, open(OUTPUT_PATH+OUTPUT_FILE_NAME, "wb"))
+        print("output saved")
 
     def load_table(self, table: dict = None):
         """implementation would take a parameter for QTable of type dict[int,[float]]"""
@@ -51,18 +52,21 @@ class QTPlayer(PlayerBase):
         """ function to make a move based on the """
         board_hash = board.board_to_hash()
         q_vals = self.get_q_value(board_hash)
+        # print("init q_vals", q_vals)
         check_count = 0
         while check_count < NUM_CELLS:
             move = np.argmax(q_vals)  # gives action/cell which has max Q-Value
+            # print("checking move", move)
             if board.is_move_valid(move):
                 self.moves_history.append((board_hash, move))
+                # print("Move made", (board_hash, move), "history len",len(self.moves_history))
                 return move
             q_vals[move] = MIN_Q_VALUE
             check_count = check_count + 1
 
         # if no move found among q_vals, which shouldn't happen because 'make_move'
         # is called after checking if EMPTY cells are available
-        print("Q-Values", q_vals, "\n", board_hash, "\n", str(board.board))
+        print("Q-Values", q_vals, "\n", board_hash, "\n", str(board.board), check_count)
         raise Exception("No valid moves found")
 
     def get_q_value(self, board_hash: int):
@@ -71,9 +75,9 @@ class QTPlayer(PlayerBase):
         by hash value - board_hash
         """
         if board_hash not in self.q_table:
-            self.q_table[board_hash] = np.around(np.random.uniform(0.3, 0.7, 9),decimals=2)
+            self.q_table[board_hash] = np.around(np.random.uniform(0.3, 0.7, 9), decimals=2)
             # np.full((NUM_CELLS,), self.q_init)
-        return self.q_table[board_hash]
+        return self.q_table[board_hash].copy()
 
     def update_q_table(self):
         pass
@@ -91,12 +95,17 @@ class QTPlayer(PlayerBase):
         else:
             final_val = DRAW_VALUE
 
-        self.q_table[self.moves_history[0]] = final_val
+        self.q_table[self.moves_history[0][0]][self.moves_history[0][1]] = final_val
         for i, move in enumerate(self.moves_history[1:]):
             # Next board state of i^th move is (i-1)^th state, since we have reversed the moves history list.
             max_q_of_next_state = np.max(self.get_q_value(self.moves_history[i-1][0]))
             # key error!!! try saving all the keys in a list in get_hash function and check what's wrong.
-            self.q_table[move] = (1-self.alpha)*self.q_table[move] + self.alpha*self.gamma*max_q_of_next_state
+            try:
+                self.q_table[move[0]][move[1]] = (1-self.alpha)*self.q_table[move[0]][move[1]] + self.alpha*self.gamma*max_q_of_next_state
+            except KeyError:
+                print("Problem move is", move, self.q_table[move[0]] if move[0] in self.q_table else "key doesn't exist"
+                      , "total hashes", len(self.q_table), "index", i)
+                raise Exception("Key not found")
 
     def next_match(self):
         self.moves_history = []

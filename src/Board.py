@@ -85,24 +85,25 @@ class Board:
                     else:
                         self.board[self.pos_1d_to_2d(self.o_player.make_move(self))] = _O_
                         self.turn = _X_
-            #
-            # One match is over. Notify players. QPlayer is supposed to update its table now.
-            # Each player must keep track of it's own moves.
-            self.match_results[t, m] = self.is_over()  # Redundant call. Need to reduce.
-            self.q_player.match_over(self.match_results[t, m])
-            self.o_player.match_over(self.match_results[t, m])
-            prev_winner = self.match_results[t, m]
-            self.reset(prev_winner)  # prev winner would take first turn
-            self.q_player.next_match()
-            self.o_player.next_match()
+                #
+                # One match is over. Notify players. QPlayer is supposed to update its table now.
+                # Each player must keep track of it's own moves.
+                self.match_results[t, m] = self.is_over()  # Redundant call. Need to reduce.
+                self.q_player.match_over(self.match_results[t, m])
+                self.o_player.match_over(self.match_results[t, m])
+                prev_winner = self.match_results[t, m]
+                self.reset(prev_winner)  # prev winner would take first turn
+                self.q_player.next_match()
+                self.o_player.next_match()
 
-        # One tournament is done
-        print("****** Tournament:", t, "result", "******", "\n")
-        x_wins = np.count_nonzero(self.match_results[t, :] == self.WIN_X)
-        o_wins = np.count_nonzero(self.match_results[t, :] == self.WIN_O)
-        draws = matches - (x_wins + o_wins)
-        print("X wins % =", (x_wins / matches) * 100, "O wins % =", (o_wins / matches) * 100, "Draws % =",
-              (draws / matches) * 100, "\n")
+            # One tournament is done
+            print("****** Tournament:", t, "result", "******", "\n")
+            x_wins = np.count_nonzero(self.match_results[t, :] == WIN_X)
+            o_wins = np.count_nonzero(self.match_results[t, :] == WIN_O)
+            draws = matches - (x_wins + o_wins)
+            print("X wins % =", (x_wins / matches) * 100, "O wins % =", (o_wins / matches) * 100, "Draws % =",
+                  (draws / matches) * 100, "\n")
+        self.q_player.save_table()
 
     def board_to_hash(self):
         # str(boardObj.board) : it's easier but string consumes much more memory
@@ -115,7 +116,7 @@ class Board:
         returns True if valid, else False
         """
         pos = self.pos_1d_to_2d(move)
-        print("is_move_valid", move, pos, self.board[pos])
+        # print("is_move_valid", move, pos, self.board[pos])
         if self.board[pos] == _EMPTY_ and (0 <= move < NUM_CELLS):
             return True
         else:

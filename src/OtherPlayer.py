@@ -25,7 +25,7 @@ class OtherPlayer(PlayerBase):
 				self.move_history.append(move)
 				return move
 
-	def match_over(self):
+	def match_over(self, match_result):
 		pass
 
 	def next_match(self):
