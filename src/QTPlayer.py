@@ -36,17 +36,19 @@ class QTPlayer(PlayerBase):
     def save_table(self):
         """ saves the q_table into 'output' folder of application. """
         pickle.dump(self.q_table, open(OUTPUT_PATH+OUTPUT_FILE_NAME, "wb"))
-        print("output saved")
+        print("output saved. Length of table=", len(self.q_table))
 
     def load_table(self, table: dict = None):
         """implementation would take a parameter for QTable of type dict[int,[float]]"""
-        if(table is None):
+        if table is None:
             try:
                 self.q_table = pickle.load(open(OUTPUT_PATH+OUTPUT_FILE_NAME, "rb"))
+                print("Table loaded from output file. Length=", len(self.q_table))
             except FileNotFoundError:
                 print("Either provide a QTable dict to load or a path from where QTable dict can be loaded")
-            else:
-                self.q_table = table
+        else:
+            self.q_table = table
+            print("Table loaded from passed object")
 
     def make_move(self, board: Board) -> int:
         """ function to make a move based on the """
@@ -75,6 +77,7 @@ class QTPlayer(PlayerBase):
         by hash value - board_hash
         """
         if board_hash not in self.q_table:
+            # print("hash not found", board_hash)
             self.q_table[board_hash] = np.around(np.random.uniform(0.3, 0.7, 9), decimals=2)
             # np.full((NUM_CELLS,), self.q_init)
         return self.q_table[board_hash].copy()
