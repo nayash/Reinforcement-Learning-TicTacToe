@@ -50,10 +50,10 @@ class Board:
         diag_m = np.take(temp_board, [0, 4, 8])  # np.diag(self.board)
         diag_s = np.take(temp_board, [2, 4, 6])  # np.diag(np.fliplr(self.board))
         mat = self.board  # np.reshape(temp_board,(3,3))
-        if (mat == _X_).all(axis=0).any() or (mat == _X_).all(axis=1).any() or (diag_m == _X_).all():
+        if (mat == _X_).all(axis=0).any() or (mat == _X_).all(axis=1).any() or (diag_m == _X_).all() or (diag_s == _X_).all():
             return WIN_X  # playerX win
 
-        if (mat == _O_).all(axis=0).any() or (mat == _O_).all(axis=1).any() or (diag_m == _O_).all():
+        if (mat == _O_).all(axis=0).any() or (mat == _O_).all(axis=1).any() or (diag_m == _O_).all() or (diag_s == _O_).all():
             return WIN_O  # playerO win
 
         if np.count_nonzero(mat == _EMPTY_) == 0:
@@ -61,18 +61,17 @@ class Board:
 
         return IN_PROG
 
-    def start_play(self, tournaments=10, matches=100):
+    def start_play(self, q_player, o_player, tournaments=10, matches=100):
         """
         Starts playing the game for passed number of tournaments, with each tournament
         having given number of matches. Uses the player passed while class instantiation.
         For simpliciy let q-player always play 'X' irrespective of the fact that it's first player or not.
         """
         # deferred import due to cyclic dependency
-        from src.QTPlayer import QTPlayer
-        from src.OtherPlayer import OtherPlayer
-
-        self.q_player = QTPlayer()
-        self.o_player = OtherPlayer()
+        # from src.QTPlayer import QTPlayer
+        # from src.OtherPlayer import OtherPlayer
+        # self.q_player = QTPlayer()
+        # self.o_player = OtherPlayer()
 
         print("Starting Game...")
         self.match_results = np.full((tournaments, matches), -1)
@@ -80,21 +79,21 @@ class Board:
             for m in range(matches):
                 while self.is_over() == IN_PROG:
                     if self.turn == _X_:
-                        self.board[self.pos_1d_to_2d(self.q_player.make_move(self))] = _X_
+                        self.board[self.pos_1d_to_2d(q_player.make_move(self))] = _X_
                         self.turn = _O_
                     else:
-                        self.board[self.pos_1d_to_2d(self.o_player.make_move(self))] = _O_
+                        self.board[self.pos_1d_to_2d(o_player.make_move(self))] = _O_
                         self.turn = _X_
                 #
                 # One match is over. Notify players. QPlayer is supposed to update its table now.
                 # Each player must keep track of it's own moves.
                 self.match_results[t, m] = self.is_over()  # Redundant call. Need to reduce.
-                self.q_player.match_over(self.match_results[t, m])
-                self.o_player.match_over(self.match_results[t, m])
+                q_player.match_over(self.match_results[t, m])
+                o_player.match_over(self.match_results[t, m])
                 prev_winner = self.match_results[t, m]
                 self.reset(prev_winner)  # prev winner would take first turn
-                self.q_player.next_match()
-                self.o_player.next_match()
+                q_player.next_match()
+                o_player.next_match()
 
             # One tournament is done
             print("****** Tournament:", t, "result", "******", "\n")
@@ -103,7 +102,7 @@ class Board:
             draws = matches - (x_wins + o_wins)
             print("X wins % =", (x_wins / matches) * 100, "O wins % =", (o_wins / matches) * 100, "Draws % =",
                   (draws / matches) * 100, "\n")
-        self.q_player.save_table()
+        q_player.save_table()
 
     def board_to_hash(self):
         # str(boardObj.board) : it's easier but string consumes much more memory
@@ -129,3 +128,4 @@ class Board:
 
     def pos_1d_to_2d(self, pos: int):
         return (pos // BOARD_DIM[1], pos % BOARD_DIM[1])
+

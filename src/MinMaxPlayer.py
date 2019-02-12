@@ -9,7 +9,7 @@ A Tic-Tac-Toe player implementation using MinMax algorithm.
 import pickle
 import numpy as np
 
-from src.Board import Board, NUM_CELLS, WIN_O, WIN_X, DRAW, _EMPTY_, _X_, _O_
+from src.Board import Board, NUM_CELLS, WIN_O, WIN_X, DRAW, _EMPTY_, _X_, _O_, IN_PROG
 from src.PlayerBase import PlayerBase
 
 WIN_VALUE = 10
@@ -19,7 +19,7 @@ DRAW_VALUE = 10
 
 class MinMaxPlayer(PlayerBase):
 
-    def __init__(self, side: int=0):
+    def __init__(self, side: int = _O_):
         self.move_history = []
         self.side = side
         super().__init__()
@@ -31,7 +31,7 @@ class MinMaxPlayer(PlayerBase):
         :param board: instance of Board object
         :return: best_move_cell_index_1D: int, best_game_value: int
         """
-        return self.find_best_move(board)
+        return self.find_best_move(board)[0]
 
     def match_over(self, match_result: int):
         """
@@ -43,6 +43,12 @@ class MinMaxPlayer(PlayerBase):
 
     def next_match(self):
         self.move_history = []
+
+    def get_other_side(self):
+        if self.side == _X_:
+            return _O_
+        else:
+            return _X_
 
     def min_max(self, board: Board, depth: int, is_max: bool):
         """
@@ -82,7 +88,7 @@ class MinMaxPlayer(PlayerBase):
             empty_cells = board.get_empty_cells_1d()
             for cell in empty_cells:
                 pos_coord = board.pos_1d_to_2d(cell)
-                board.board[pos_coord] = self.side
+                board.board[pos_coord] = self.get_other_side()
                 best_value = np.minimum(best_value, self.min_max(board, depth+1, not is_max))
                 board.board[pos_coord] = _EMPTY_
             return best_value-depth
@@ -94,6 +100,10 @@ class MinMaxPlayer(PlayerBase):
         move.
         :return: int, int --> best move, game result
         """
+        if board.is_over() != IN_PROG:
+            print("Match already over")
+            return -1, -1
+
         empty_cells = board.get_empty_cells_1d()
         best_value = -np.inf
         best_move = -1  # cell index in 1D for best move
