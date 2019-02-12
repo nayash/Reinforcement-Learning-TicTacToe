@@ -89,6 +89,7 @@ class QTPlayer(PlayerBase):
         """
         Match is over. Update the Q-Learning Table as for all the moves in move history
         """
+        print("Re-evaluating for result", match_result)
         self.moves_history.reverse()
         final_val = -1  # final state should be WIN_VALUE if q_player won, else other values
         if match_result == WIN_X:
@@ -98,13 +99,22 @@ class QTPlayer(PlayerBase):
         else:
             final_val = DRAW_VALUE
 
+        # old_value = self.q_table[self.moves_history[0][0]][self.moves_history[0][1]]
         self.q_table[self.moves_history[0][0]][self.moves_history[0][1]] = final_val
+        # new_value = self.q_table[self.moves_history[0][0]][self.moves_history[0][1]]
+        # print("Move made=", self.moves_history[0][1], ", Old Value=", old_value, ", New Value=", new_value,
+        # "diff=", (new_value-old_value))
         for i, move in enumerate(self.moves_history[1:]):
             # Next board state of i^th move is (i-1)^th state, since we have reversed the moves history list.
             max_q_of_next_state = np.max(self.get_q_value(self.moves_history[i-1][0]))
             # key error!!! try saving all the keys in a list in get_hash function and check what's wrong.
             try:
-                self.q_table[move[0]][move[1]] = (1-self.alpha)*self.q_table[move[0]][move[1]] + self.alpha*self.gamma*max_q_of_next_state
+                # old_value = self.q_table[move[0]][move[1]]
+                self.q_table[move[0]][move[1]] = (1-self.alpha)*self.q_table[move[0]][move[1]] + self.alpha*self.gamma\
+                    * max_q_of_next_state
+                # new_value = self.q_table[move[0]][move[1]]
+                # print("Move made=", move[1], ", Old Value=", old_value, ", New Value=", new_value, "diff=",
+                # (new_value-old_value))
             except KeyError:
                 print("Problem move is", move, self.q_table[move[0]] if move[0] in self.q_table else "key doesn't exist"
                       , "total hashes", len(self.q_table), "index", i)

@@ -15,7 +15,7 @@ class PlayerBase(ABC):
 		super().__init__()
 
 	@abstractmethod
-	def make_move(self) -> int: # implementation would take a param: current "Board" instance
+	def make_move(self):  # implementation would take a param: current "Board" instance
 		pass
 
 	@abstractmethod

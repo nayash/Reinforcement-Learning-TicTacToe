@@ -14,5 +14,5 @@ from src.Board import Board
 # o_player = OtherPlayer.OtherPlayer()
 
 board = Board()
-board.start_play(1000, 1000)
+board.start_play(1, 5)
 print("------Game Finished------")

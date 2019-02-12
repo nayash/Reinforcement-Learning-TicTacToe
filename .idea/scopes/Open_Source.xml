@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Open Source" pattern="file:src/Board.py||file:src/Main.py||file:src/MinMaxPlayer.py||file:src/OtherPlayer.py||file:src/PlayerBase.py||file:src/QTPlayer.py||file:src/script.py" />
+</component>
