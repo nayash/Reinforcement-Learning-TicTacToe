@@ -6,8 +6,9 @@
 A Tic-Tac-Toe player implementation using MinMax algorithm.
 """
 
-import pickle
 import numpy as np
+import time
+import pickle
 
 from src.Board import Board, NUM_CELLS, WIN_O, WIN_X, DRAW, _EMPTY_, _X_, _O_, IN_PROG
 from src.PlayerBase import PlayerBase
@@ -22,6 +23,7 @@ class MinMaxPlayer(PlayerBase):
     def __init__(self, side: int = _O_):
         self.move_history = []
         self.side = side
+        self.calc_move_cache = {}  # board_hash, best_move
         super().__init__()
 
     def make_move(self, board: Board):  # implementation would take a param: current "Board" instance
@@ -100,6 +102,7 @@ class MinMaxPlayer(PlayerBase):
         move.
         :return: int, int --> best move, game result
         """
+        stime = time.time()
         if board.is_over() != IN_PROG:
             print("Match already over")
             return -1, -1
@@ -109,11 +112,19 @@ class MinMaxPlayer(PlayerBase):
         best_move = -1  # cell index in 1D for best move
         for cell in empty_cells:
             pos_coord = board.pos_1d_to_2d(cell)
-            board.board[pos_coord] = self.side
-            calc_value = self.min_max(board, 0, False)
-            board.board[pos_coord] = _EMPTY_
+            board.board[pos_coord] = self.side  # move to try
+            board_hash = board.board_to_hash()
+            if board_hash in self.calc_move_cache:
+                calc_value = self.calc_move_cache[board_hash]
+            else:
+                calc_value = self.min_max(board, 0, False)
+                self.calc_move_cache[board_hash] = calc_value
+            board.board[pos_coord] = _EMPTY_  # undo move that was tried above
             if calc_value > best_value:
                 best_value = calc_value
                 best_move = cell
         self.move_history.append((board.board_to_hash(), best_move))
+        if (time.time() - stime) > 4:
+            print("Runtime for find_best_move", (time.time() - stime) // 60, "minutes", (time.time() - stime) % 60,
+                  "seconds")
         return best_move, best_value
