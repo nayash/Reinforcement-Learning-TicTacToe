@@ -2,7 +2,10 @@
 # Copyright 2019 Asutosh Nayak. All rights reserved.
 #
 
+import pickle
 import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import animation
 
 # values to fill in board cell for each state are as follows:
 _X_ = 1
@@ -18,6 +21,8 @@ IN_PROG = 3
 BOARD_DIM = (3, 3)
 NUM_CELLS = BOARD_DIM[0] * BOARD_DIM[1]
 
+OUTPUT_PATH = ".\\output\\"
+OUTPUT_FILE_NAME = "anim_data.pickle"
 
 class Board:
     """
@@ -32,6 +37,27 @@ class Board:
         # self.q_player = q_player  # Q Learning player
         # self.o_player = o_player  # Other player (could be random or min-max)
         self.tournaments_stat = []
+        self.init_pyplot()
+
+    def init_pyplot(self):
+        self.anim_frame_data = []  # (player, move) or (player, ): denotes 'player' won or (): reset plot
+        self.fig = plt.figure(num=None, figsize=(5, 5))
+        plt.title("Tic Tac Toe")
+        # plt.axis('off')
+        plt.tight_layout(2)
+
+    def plot_layout(self):
+        plt.clf()
+        # draw horizontal lines
+        plt.plot([0, 2, 4, 6], [0, 0, 0, 0], 'b-')
+        plt.plot([0, 2, 4, 6], [2, 2, 2, 2], 'b-')
+        plt.plot([0, 2, 4, 6], [4, 4, 4, 4], 'b-')
+        plt.plot([0, 2, 4, 6], [6, 6, 6, 6], 'b-')
+        # draw vertical lines
+        plt.plot([0, 0, 0, 0], [0, 2, 4, 6], 'b-')
+        plt.plot([2, 2, 2, 2], [0, 2, 4, 6], 'b-')
+        plt.plot([4, 4, 4, 4], [0, 2, 4, 6], 'b-')
+        plt.plot([6, 6, 6, 6], [0, 2, 4, 6], 'b-')
 
     def reset(self, turn=_X_):
         """
@@ -75,15 +101,28 @@ class Board:
 
         print("Starting Game...")
         self.match_results = np.full((tournaments, matches), -1)
+        save_4_anim = False
         for t in range(tournaments):
             for m in range(matches):
+                if (t == tournaments-1 and matches-m <= 5) or (t == 0 and m < 5):
+                    # save first 5 and last 5 games to show visuals
+                    save_4_anim = True
+                else:
+                    save_4_anim = False
+                print("save_4_anim",save_4_anim)
                 while self.is_over() == IN_PROG:
                     if self.turn == _X_:
-                        self.board[self.pos_1d_to_2d(q_player.make_move(self))] = _X_
+                        pos = self.pos_1d_to_2d(q_player.make_move(self))
+                        self.board[pos] = _X_
                         self.turn = _O_
+                        if save_4_anim:
+                            self.anim_frame_data.append((_X_, pos))
                     else:
-                        self.board[self.pos_1d_to_2d(o_player.make_move(self))] = _O_
+                        pos = self.pos_1d_to_2d(o_player.make_move(self))
+                        self.board[pos] = _O_
                         self.turn = _X_
+                        if save_4_anim:
+                            self.anim_frame_data.append((_O_, pos))
                 #
                 # One match is over. Notify players. QPlayer is supposed to update its table now.
                 # Each player must keep track of it's own moves.
@@ -91,7 +130,11 @@ class Board:
                 q_player.match_over(self.match_results[t, m])
                 o_player.match_over(self.match_results[t, m])
                 prev_winner = self.match_results[t, m]
+                if save_4_anim:
+                    self.anim_frame_data.append((prev_winner, ))
                 self.reset(prev_winner)  # prev winner would take first turn
+                if save_4_anim:
+                    self.anim_frame_data.append(())
                 q_player.next_match()
                 o_player.next_match()
 
@@ -103,6 +146,47 @@ class Board:
             print("X wins % =", (x_wins / matches) * 100, "O wins % =", (o_wins / matches) * 100, "Draws % =",
                   (draws / matches) * 100, "\n")
         q_player.save_table()
+        print("Anim data len", len(self.anim_frame_data))
+        self.save_anim_data()
+        self.start_visual()
+
+    def save_anim_data(self):
+        pickle.dump(self.anim_frame_data, open(OUTPUT_PATH + OUTPUT_FILE_NAME, "wb"))
+        print("Animation data saved")
+
+    def load_anim_data(self):
+        self.anim_frame_data = pickle.load(open(OUTPUT_PATH+OUTPUT_FILE_NAME, 'rb'))
+        print("Animation data loaded")
+
+    def start_visual(self):
+        anim = animation.FuncAnimation(fig=self.fig, func=self.animate, frames=self.anim_frame_data, init_func=self.plot_layout,
+                                       interval=1000, repeat=False)
+        plt.show()
+
+    def animate(self, curr_move):
+        if len(curr_move) == 1:
+            if curr_move[0] == _X_:
+                plt.xlabel("Player X (Q-Player) won")
+            elif curr_move[0] == _O_:
+                plt.xlabel("Player O (MinMax Player) won")
+            else:
+                plt.xlabel("Game draw")
+        elif len(curr_move) == 0:
+            plt.xlabel("Reset for new game")
+            self.plot_layout()
+        else:
+            plt.xlabel("Game in-progress")
+            symbol = "-"
+            if curr_move[0] == _X_:
+                symbol = "X"
+            else:
+                symbol = "O"
+            plot_pos = self.mat_pos_to_plot_pos(curr_move[1])
+            plt.text(plot_pos[0], plot_pos[1], symbol, fontsize=25, horizontalalignment='center', verticalalignment='center', color='g',
+                     fontweight='bold')
+
+    def mat_pos_to_plot_pos(self, mat_pos):
+        return 2*mat_pos[0] + 1, (6 - (2*mat_pos[1] + 1))
 
     def board_to_hash(self):
         # str(boardObj.board) : it's easier but string consumes much more memory

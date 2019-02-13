@@ -19,8 +19,8 @@ from src.MinMaxPlayer import MinMaxPlayer
 
 q_player = QTPlayer()
 o_player = MinMaxPlayer()  # OtherPlayer()
-q_player.load_table()
+# q_player.load_table()
 board = Board()
-board.start_play(q_player, o_player, 10, 500)
+board.start_play(q_player, o_player, 1, 5)
 print("------Game Finished------")
 
