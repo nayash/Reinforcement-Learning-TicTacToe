@@ -11,7 +11,7 @@
 import pickle
 import numpy as np
 import matplotlib.pyplot as plt
-plt.rcParams['animation.ffmpeg_path'] = r'C:\Users\nayak\Python\ffmpeg\bin\ffmpeg.exe'
+plt.rcParams['animation.ffmpeg_path'] = r'your_path_to_ffmpeg_bin\ffmpeg.exe'
 from matplotlib import animation
 
 # values to fill in board cell for each state are as follows:
@@ -41,8 +41,6 @@ class Board:
     def __init__(self, turn=_X_, is_visual_enabled=True):
         self.board = np.full((3, 3), _EMPTY_)
         self.turn = turn
-        # self.q_player = q_player  # Q Learning player
-        # self.o_player = o_player  # Other player (could be random or min-max)
         self.tournaments_stat = []
         self.init_pyplot()
         self.is_visual_enabled = is_visual_enabled
@@ -101,11 +99,6 @@ class Board:
         having given number of matches. Uses the player passed while class instantiation.
         For simpliciy let q-player always play 'X' irrespective of the fact that it's first player or not.
         """
-        # deferred import due to cyclic dependency
-        # from src.QTPlayer import QTPlayer
-        # from src.OtherPlayer import OtherPlayer
-        # self.q_player = QTPlayer()
-        # self.o_player = OtherPlayer()
 
         print("Starting Game...")
         self.match_results = np.full((tournaments, matches), -1)
@@ -179,7 +172,6 @@ class Board:
         ff_writer = animation.FFMpegWriter(fps=1, metadata=dict(title='Reinforcement Learning', artist='Asutosh Nayak',
                                                                 copyright='Rights Reserved'), extra_args=['-vcodec', 'libx264'])
         # writer = Writer(fps=1, metadata=dict(artist='Asutosh Nayak'), bitrate=1800)
-        # output_path = r"C:\Users\nayak\Documents\python_scripts\ML\RL_3T\src\output"
         anim.save(OUTPUT_PATH+"training_games.mp4", writer=ff_writer)
         print("Animation saved as video file")
 
