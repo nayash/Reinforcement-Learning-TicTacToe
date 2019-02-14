@@ -19,7 +19,7 @@ OUTPUT_FILE_NAME = "q_table.pickle"
 
 WIN_VALUE = 1.0
 DRAW_VALUE = 0.5
-LOSE_VALUE = 0.0
+LOSE_VALUE = -1.0
 
 MIN_Q_VALUE = -9999
 
@@ -59,10 +59,8 @@ class QTPlayer(PlayerBase):
         check_count = 0
         while check_count < NUM_CELLS:
             move = np.argmax(q_vals)  # gives action/cell which has max Q-Value
-            # print("checking move", move)
             if board.is_move_valid(move):
                 self.moves_history.append((board_hash, move))
-                # print("Move made", (board_hash, move), "history len",len(self.moves_history))
                 return move
             q_vals[move] = MIN_Q_VALUE
             check_count = check_count + 1

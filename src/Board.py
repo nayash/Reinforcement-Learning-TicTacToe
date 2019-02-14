@@ -5,6 +5,7 @@
 import pickle
 import numpy as np
 import matplotlib.pyplot as plt
+plt.rcParams['animation.ffmpeg_path'] = r'C:\Users\nayak\Python\ffmpeg\bin\ffmpeg.exe'
 from matplotlib import animation
 
 # values to fill in board cell for each state are as follows:
@@ -31,13 +32,14 @@ class Board:
     enforce game rules.
     """
 
-    def __init__(self, turn=_X_):
+    def __init__(self, turn=_X_, is_visual_enabled=True):
         self.board = np.full((3, 3), _EMPTY_)
         self.turn = turn
         # self.q_player = q_player  # Q Learning player
         # self.o_player = o_player  # Other player (could be random or min-max)
         self.tournaments_stat = []
         self.init_pyplot()
+        self.is_visual_enabled = is_visual_enabled
 
     def init_pyplot(self):
         self.anim_frame_data = []  # (player, move) or (player, ): denotes 'player' won or (): reset plot
@@ -109,7 +111,7 @@ class Board:
                     save_4_anim = True
                 else:
                     save_4_anim = False
-                print("save_4_anim",save_4_anim)
+
                 while self.is_over() == IN_PROG:
                     if self.turn == _X_:
                         pos = self.pos_1d_to_2d(q_player.make_move(self))
@@ -148,7 +150,8 @@ class Board:
         q_player.save_table()
         print("Anim data len", len(self.anim_frame_data))
         self.save_anim_data()
-        self.start_visual()
+        if self.is_visual_enabled:
+            self.start_visual()
 
     def save_anim_data(self):
         pickle.dump(self.anim_frame_data, open(OUTPUT_PATH + OUTPUT_FILE_NAME, "wb"))
@@ -159,9 +162,20 @@ class Board:
         print("Animation data loaded")
 
     def start_visual(self):
+        import sys
         anim = animation.FuncAnimation(fig=self.fig, func=self.animate, frames=self.anim_frame_data, init_func=self.plot_layout,
-                                       interval=1000, repeat=False)
-        plt.show()
+                                       interval=1000, repeat=False, save_count=sys.maxsize)
+        # plt.show()
+        self.save_animation_video(anim)
+
+    def save_animation_video(self, anim):
+        # Writer = animation.writers['ffmpeg']
+        ff_writer = animation.FFMpegWriter(fps=1, metadata=dict(title='Reinforcement Learning', artist='Asutosh Nayak',
+                                                                copyright='Rights Reserved'), extra_args=['-vcodec', 'libx264'])
+        # writer = Writer(fps=1, metadata=dict(artist='Asutosh Nayak'), bitrate=1800)
+        # output_path = r"C:\Users\nayak\Documents\python_scripts\ML\RL_3T\src\output"
+        anim.save(OUTPUT_PATH+"training_games.mp4", writer=ff_writer)
+        print("Animation saved as video file")
 
     def animate(self, curr_move):
         if len(curr_move) == 1:
@@ -175,14 +189,17 @@ class Board:
             plt.xlabel("Reset for new game")
             self.plot_layout()
         else:
-            plt.xlabel("Game in-progress")
+            plt.xlabel("Game in progress")
             symbol = "-"
+            color = "-"
             if curr_move[0] == _X_:
                 symbol = "X"
+                color = 'g'
             else:
                 symbol = "O"
+                color = 'r'
             plot_pos = self.mat_pos_to_plot_pos(curr_move[1])
-            plt.text(plot_pos[0], plot_pos[1], symbol, fontsize=25, horizontalalignment='center', verticalalignment='center', color='g',
+            plt.text(plot_pos[0], plot_pos[1], symbol, fontsize=25, horizontalalignment='center', verticalalignment='center', color=color,
                      fontweight='bold')
 
     def mat_pos_to_plot_pos(self, mat_pos):
