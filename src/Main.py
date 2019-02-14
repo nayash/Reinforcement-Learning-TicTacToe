@@ -8,6 +8,7 @@
 #     http://www.apache.org/licenses/LICENSE-2.0
 #
 
+
 """
 This script is the entry point for this application. This instantiates the Board
 and start the game play/training. 

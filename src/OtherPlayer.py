@@ -1,9 +1,15 @@
 #
-# Copyright 2019 Asutosh Nayak. All rights reserved.
+# Copyright (c) 2019. Asutosh Nayak (nayak.asutosh@ymail.com)
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
 #
 
 """
-This is the other player which plays with QTPlayer.
+This is a Random player which plays with QTPlayer.
 """
 import numpy as np
 

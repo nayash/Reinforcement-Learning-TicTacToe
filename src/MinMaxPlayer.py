@@ -1,9 +1,16 @@
 #
-# Copyright 2019 Asutosh Nayak. All rights reserved.
+# Copyright (c) 2019. Asutosh Nayak (nayak.asutosh@ymail.com)
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
 #
 
 """
 A Tic-Tac-Toe player implementation using MinMax algorithm.
+reference : https://www.geeksforgeeks.org/minimax-algorithm-in-game-theory-set-3-tic-tac-toe-ai-finding-optimal-move/
 """
 
 import numpy as np
