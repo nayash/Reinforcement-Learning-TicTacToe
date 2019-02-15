@@ -91,7 +91,7 @@ class MinMaxPlayer(PlayerBase):
                 board.board[pos_coord] = self.side
                 best_value = np.maximum(best_value, self.min_max(board, depth+1, not is_max))
                 board.board[pos_coord] = _EMPTY_
-            return best_value
+            return best_value-depth
         else:
             best_value = np.inf
             empty_cells = board.get_empty_cells_1d()
@@ -100,7 +100,7 @@ class MinMaxPlayer(PlayerBase):
                 board.board[pos_coord] = self.get_other_side()
                 best_value = np.minimum(best_value, self.min_max(board, depth+1, not is_max))
                 board.board[pos_coord] = _EMPTY_
-            return best_value
+            return best_value-depth
 
     def find_best_move(self, board: Board):
         """
@@ -135,3 +135,9 @@ class MinMaxPlayer(PlayerBase):
             print("Runtime for find_best_move", (time.time() - stime) // 60, "minutes", (time.time() - stime) % 60,
                   "seconds")
         return best_move, best_value
+
+    def save_data(self):
+        pass
+
+    def load_data(self):
+        pass

@@ -15,12 +15,13 @@ and start the game play/training.
 """
 from src.Board import Board, _X_, _O_
 from src.QTPlayer import QTPlayer
-from src.OtherPlayer import OtherPlayer
+from src.RandomPlayer import RandomPlayer
 from src.MinMaxPlayer import MinMaxPlayer
+from src.PseudoRandomPlayer import PseudoRandomPlayer
 
 q_player = QTPlayer(_X_)
-o_player = OtherPlayer() # QTPlayer(_O_)  # MinMaxPlayer()
-q_player.load_data()
+o_player = PseudoRandomPlayer()  # QTPlayer(_O_)
+# q_player.load_data()
 # o_player.load_data()
 board = Board()
 board.start_play(q_player, o_player, 10, 1000)

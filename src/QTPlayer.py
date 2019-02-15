@@ -32,12 +32,11 @@ MIN_Q_VALUE = -9999
 
 class QTPlayer(PlayerBase):
 
-    def __init__(self, side, alpha=0.9, gamma=0.95, q_init=0.6):
+    def __init__(self, side, alpha=0.9, gamma=0.95):
         self.q_table = {}  # type: Dict[string, [float]]. Stores QValues for all actions for each state of board.
         self.moves_history = []  # type: [(board_hash: int, move: int)]
         self.alpha = alpha
         self.gamma = gamma
-        self.q_init = q_init
         self.side = side
         super().__init__()
 
@@ -111,7 +110,8 @@ class QTPlayer(PlayerBase):
             final_val = LOSE_VALUE
 
         old_value = self.q_table[self.moves_history[0][0]][self.moves_history[0][1]]
-        self.q_table[self.moves_history[0][0]][self.moves_history[0][1]] = final_val
+        self.q_table[self.moves_history[0][0]][self.moves_history[0][1]] = \
+            (1-self.alpha)*self.q_table[self.moves_history[0][0]][self.moves_history[0][1]] + self.alpha * final_val
         new_value = self.q_table[self.moves_history[0][0]][self.moves_history[0][1]]
         # print("Final=", final_val, "side=", self.side, "Move made=", self.moves_history[0][1], ", Old Value=",
         #      old_value, ", New Value=", new_value, "diff=", (new_value-old_value))
@@ -122,7 +122,7 @@ class QTPlayer(PlayerBase):
             try:
                 old_value = self.q_table[move[0]][move[1]]
                 self.q_table[move[0]][move[1]] = (1-self.alpha)*self.q_table[move[0]][move[1]] + self.alpha*self.gamma\
-                    * max_q_of_next_state
+                    * max_q_of_next_state + self.alpha*final_val
                 new_value = self.q_table[move[0]][move[1]]
                 # print("Final=", final_val, "side=", self.side, "Move made=", move[1], ", Old Value=", old_value,
                 #      ", New Value=", new_value, "diff=", (new_value-old_value))

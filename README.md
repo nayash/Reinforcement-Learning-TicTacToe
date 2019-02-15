@@ -1,7 +1,7 @@
 # Reinforcement-Learning-TicTacToe
 Project to demonstrate how Reinforncement Learning or more specifically Q-Learning can be used to make a program learn from the environment.
 
-QPlayer (the target Q-Learning player) can be trained with either a random move making player (OtherPlayer) or MinMaxPlayer (implementation of MiniMax algorithm). MinMaxPlayer caches calculated values which significantly improves computation time (We have to suffer for a first few moves though).
+QPlayer (the target Q-Learning player) can be trained with either a random move making player (RandomPlayer) or MinMaxPlayer (implementation of MiniMax algorithm). MinMaxPlayer caches calculated values which significantly improves computation time (We have to suffer for a first few moves though).
 
 Once the training is done, you can see how the program learned from it's past experiences with animations or save it as video for later.
 

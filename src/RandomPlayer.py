@@ -17,7 +17,7 @@ from src.Board import Board
 from src.PlayerBase import PlayerBase
 
 
-class OtherPlayer(PlayerBase):
+class RandomPlayer(PlayerBase):
 
 	def __init__(self):
 		self.move_history = []

@@ -11,7 +11,8 @@
 import pickle
 import numpy as np
 import matplotlib.pyplot as plt
-plt.rcParams['animation.ffmpeg_path'] = r'your_path_to_ffmpeg_bin\ffmpeg.exe'
+plt.rcParams['animation.ffmpeg_path'] = r'C:\Users\nayak\Python\ffmpeg\bin\ffmpeg.exe'
+# r'your_path_to_ffmpeg_bin\ffmpeg.exe'
 from matplotlib import animation
 
 # values to fill in board cell for each state are as follows:
@@ -99,7 +100,6 @@ class Board:
         having given number of matches. Uses the player passed while class instantiation.
         For simpliciy let q-player always play 'X' irrespective of the fact that it's first player or not.
         """
-
         print("Starting Game...")
         self.match_results = np.full((tournaments, matches), -1)
         save_4_anim = False
@@ -164,7 +164,7 @@ class Board:
     def start_visual(self):
         import sys
         anim = animation.FuncAnimation(fig=self.fig, func=self.animate, frames=self.anim_frame_data, init_func=self.plot_layout,
-                                       interval=1000, repeat=False, save_count=sys.maxsize)
+                                       interval=1000, repeat=True, save_count=sys.maxsize, repeat_delay=3000)
         plt.show()
         self.save_animation_video(anim)
 
