@@ -36,3 +36,9 @@ class OtherPlayer(PlayerBase):
 
 	def next_match(self):
 		self.move_history = []
+
+	def save_data(self):
+		pass
+
+	def load_data(self):
+		pass

@@ -32,6 +32,13 @@ class PlayerBase(ABC):
 	def next_match(self):
 		pass
 
+	@abstractmethod
+	def save_data(self):
+		pass
+
+	@abstractmethod
+	def load_data(self):
+		pass
 
 
 

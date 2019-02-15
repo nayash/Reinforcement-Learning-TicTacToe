@@ -24,7 +24,7 @@ OUTPUT_PATH = ".\\output\\"
 OUTPUT_FILE_NAME = "q_table.pickle"
 
 WIN_VALUE = 1.0
-DRAW_VALUE = 0.5
+DRAW_VALUE = 0.0
 LOSE_VALUE = -1.0
 
 MIN_Q_VALUE = -9999
@@ -32,24 +32,29 @@ MIN_Q_VALUE = -9999
 
 class QTPlayer(PlayerBase):
 
-    def __init__(self, alpha=0.9, gamma=0.95, q_init=0.6):
+    def __init__(self, side, alpha=0.9, gamma=0.95, q_init=0.6):
         self.q_table = {}  # type: Dict[string, [float]]. Stores QValues for all actions for each state of board.
         self.moves_history = []  # type: [(board_hash: int, move: int)]
         self.alpha = alpha
         self.gamma = gamma
         self.q_init = q_init
+        self.side = side
         super().__init__()
 
-    def save_table(self):
-        """ saves the q_table into 'output' folder of application. """
-        pickle.dump(self.q_table, open(OUTPUT_PATH+OUTPUT_FILE_NAME, "wb"))
+    def save_data(self):
+        """ saves the q_table into 'output' folder of application."""
+        pickle.dump(self.q_table, open(OUTPUT_PATH+OUTPUT_FILE_NAME+"_"+str(self.side), "wb"))
         print("output saved. Length of table=", len(self.q_table))
 
-    def load_table(self, table: dict = None):
-        """implementation would take a parameter for QTable of type dict[int,[float]]"""
+    def load_data(self, table: dict = None):
+        """
+        method can be used to load any existing trained model to continue training on it further
+        :param table: type dict[int,[float]]
+        :return: None
+        """
         if table is None:
             try:
-                self.q_table = pickle.load(open(OUTPUT_PATH+OUTPUT_FILE_NAME, "rb"))
+                self.q_table = pickle.load(open(OUTPUT_PATH+OUTPUT_FILE_NAME+"_"+str(self.side), "rb"))
                 print("Table loaded from output file. Length=", len(self.q_table))
             except FileNotFoundError:
                 print("Either provide a QTable dict to load or a path from where QTable dict can be loaded")
@@ -98,18 +103,18 @@ class QTPlayer(PlayerBase):
         # print("Re-evaluating for result", match_result, "Length of move_history",len(self.moves_history))
         self.moves_history.reverse()
         final_val = -1  # final state should be WIN_VALUE if q_player won, else other values
-        if match_result == WIN_X:
+        if match_result == self.side:
             final_val = WIN_VALUE
-        elif match_result == WIN_O:
-            final_val = LOSE_VALUE
-        else:
+        elif match_result == DRAW:
             final_val = DRAW_VALUE
+        else:
+            final_val = LOSE_VALUE
 
         old_value = self.q_table[self.moves_history[0][0]][self.moves_history[0][1]]
         self.q_table[self.moves_history[0][0]][self.moves_history[0][1]] = final_val
         new_value = self.q_table[self.moves_history[0][0]][self.moves_history[0][1]]
-        # print("Move made=", self.moves_history[0][1], ", Old Value=", old_value, ", New Value=", new_value,
-        #      "diff=", (new_value-old_value))
+        # print("Final=", final_val, "side=", self.side, "Move made=", self.moves_history[0][1], ", Old Value=",
+        #      old_value, ", New Value=", new_value, "diff=", (new_value-old_value))
         for i, move in enumerate(self.moves_history[1:]):
             # Next board state of i^th move is (i-1)^th state, since we have reversed the moves history list.
             i_time = time.time()
@@ -119,8 +124,8 @@ class QTPlayer(PlayerBase):
                 self.q_table[move[0]][move[1]] = (1-self.alpha)*self.q_table[move[0]][move[1]] + self.alpha*self.gamma\
                     * max_q_of_next_state
                 new_value = self.q_table[move[0]][move[1]]
-                # print("Move made=", move[1], ", Old Value=", old_value, ", New Value=", new_value, "diff=",
-                #      (new_value-old_value))
+                # print("Final=", final_val, "side=", self.side, "Move made=", move[1], ", Old Value=", old_value,
+                #      ", New Value=", new_value, "diff=", (new_value-old_value))
                 # print("iter time", time.time()-i_time)
             except KeyError:
                 print("Problem move is", move, self.q_table[move[0]] if move[0] in self.q_table else "key doesn't exist"

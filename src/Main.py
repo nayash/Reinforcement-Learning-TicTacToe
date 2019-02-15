@@ -13,15 +13,16 @@
 This script is the entry point for this application. This instantiates the Board
 and start the game play/training. 
 """
-from src.Board import Board
+from src.Board import Board, _X_, _O_
 from src.QTPlayer import QTPlayer
 from src.OtherPlayer import OtherPlayer
 from src.MinMaxPlayer import MinMaxPlayer
 
-q_player = QTPlayer()
-o_player = MinMaxPlayer()  # OtherPlayer()
-q_player.load_table()
+q_player = QTPlayer(_X_)
+o_player = QTPlayer(_O_)  # MinMaxPlayer()  # OtherPlayer()
+# q_player.load_data()
+# o_player.load_data()
 board = Board()
-board.start_play(q_player, o_player, 10, 500)
+board.start_play(q_player, o_player, 10, 100)
 print("------Game Finished------")
 

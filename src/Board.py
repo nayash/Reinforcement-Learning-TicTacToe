@@ -11,7 +11,8 @@
 import pickle
 import numpy as np
 import matplotlib.pyplot as plt
-plt.rcParams['animation.ffmpeg_path'] = r'your_path_to_ffmpeg_bin\ffmpeg.exe'
+plt.rcParams['animation.ffmpeg_path'] = r'C:\Users\nayak\Python\ffmpeg\bin\ffmpeg.exe'
+# r'your_path_to_ffmpeg_bin\ffmpeg.exe'
 from matplotlib import animation
 
 # values to fill in board cell for each state are as follows:
@@ -146,7 +147,8 @@ class Board:
             draws = matches - (x_wins + o_wins)
             print("X wins % =", (x_wins / matches) * 100, "O wins % =", (o_wins / matches) * 100, "Draws % =",
                   (draws / matches) * 100, "\n")
-        q_player.save_table()
+        q_player.save_data()
+        o_player.save_data()
         print("Anim data len", len(self.anim_frame_data))
         self.save_anim_data()
         if self.is_visual_enabled:
@@ -164,7 +166,7 @@ class Board:
         import sys
         anim = animation.FuncAnimation(fig=self.fig, func=self.animate, frames=self.anim_frame_data, init_func=self.plot_layout,
                                        interval=1000, repeat=False, save_count=sys.maxsize)
-        # plt.show()
+        plt.show()
         self.save_animation_video(anim)
 
     def save_animation_video(self, anim):
