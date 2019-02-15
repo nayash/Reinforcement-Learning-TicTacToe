@@ -11,8 +11,7 @@
 import pickle
 import numpy as np
 import matplotlib.pyplot as plt
-plt.rcParams['animation.ffmpeg_path'] = r'C:\Users\nayak\Python\ffmpeg\bin\ffmpeg.exe'
-# r'your_path_to_ffmpeg_bin\ffmpeg.exe'
+plt.rcParams['animation.ffmpeg_path'] = r'your_path_to_ffmpeg_bin\ffmpeg.exe'
 from matplotlib import animation
 
 # values to fill in board cell for each state are as follows:
