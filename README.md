@@ -14,3 +14,6 @@ Current Limitations (What I have found till now)
 UPDATE: Added a new player strategy -pseudo random- which uses MiniMax and random strategy altenately to mimic human errors and hence help the Qplayer see more number of board states. So above limitation is overcome to some extent.
 
 Watch the program in action https://github.com/DarkKnight1991/Reinforcement-Learning-TicTacToe/blob/master/src/output/training_games_trimmed.mp4
+
+# How to run it
+Just open the Main.py file, initialize  "o_player" to the player object that you want to play with and let the magic begin.
