@@ -17,8 +17,8 @@ import numpy as np
 import time
 import pickle
 
-from src.Board import Board, NUM_CELLS, WIN_O, WIN_X, DRAW, _EMPTY_, _X_, _O_, IN_PROG
-from src.PlayerBase import PlayerBase
+from Board import Board, NUM_CELLS, WIN_O, WIN_X, DRAW, _EMPTY_, _X_, _O_, IN_PROG
+from PlayerBase import PlayerBase
 
 WIN_VALUE = 10
 LOSE_VALUE = -10

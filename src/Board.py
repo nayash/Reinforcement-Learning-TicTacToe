@@ -11,6 +11,7 @@
 import pickle
 import numpy as np
 import matplotlib.pyplot as plt
+from tqdm import tqdm
 plt.rcParams['animation.ffmpeg_path'] = r'C:\Users\nayak\Python\ffmpeg\bin\ffmpeg.exe'
 # r'your_path_to_ffmpeg_bin\ffmpeg.exe'
 from matplotlib import animation
@@ -117,13 +118,13 @@ class Board:
                         self.board[pos] = _X_
                         self.turn = _O_
                         if save_4_anim:
-                            self.anim_frame_data.append((_X_, pos))
+                            self.anim_frame_data.append((_X_, pos, (t, m)))
                     else:
                         pos = self.pos_1d_to_2d(o_player.make_move(self))
                         self.board[pos] = _O_
                         self.turn = _X_
                         if save_4_anim:
-                            self.anim_frame_data.append((_O_, pos))
+                            self.anim_frame_data.append((_O_, pos, (t, m)))
                 #
                 # One match is over. Notify players. QPlayer is supposed to update its table now.
                 # Each player must keep track of it's own moves.
@@ -132,7 +133,7 @@ class Board:
                 o_player.match_over(self.match_results[t, m])
                 prev_winner = self.match_results[t, m]
                 if save_4_anim:
-                    self.anim_frame_data.append((prev_winner, ))
+                    self.anim_frame_data.append((prev_winner, (t, m)))
                 self.reset(prev_winner)  # prev winner would take first turn
                 if save_4_anim:
                     self.anim_frame_data.append(())
@@ -154,14 +155,27 @@ class Board:
             self.start_visual()
 
     def save_anim_data(self):
+        """
+        saves the data needed to visualize the game moves as animation, which can be loaded back using 'load_anim_data'
+        method.
+        :return: None
+        """
         pickle.dump(self.anim_frame_data, open(OUTPUT_PATH + OUTPUT_FILE_NAME, "wb"))
         print("Animation data saved")
 
     def load_anim_data(self):
+        """
+        loads the data needed to visualized the game moves as animation, which was saved by calling 'save_anim_data'
+        :return: None
+        """
         self.anim_frame_data = pickle.load(open(OUTPUT_PATH+OUTPUT_FILE_NAME, 'rb'))
         print("Animation data loaded")
 
     def start_visual(self):
+        """
+        function to start the animation of game moves stored in anim_frame_data. It also saves it as a video.
+        :return: None
+        """
         import sys
         anim = animation.FuncAnimation(fig=self.fig, func=self.animate, frames=self.anim_frame_data, init_func=self.plot_layout,
                                        interval=1000, repeat=True, save_count=sys.maxsize, repeat_delay=3000)
@@ -177,7 +191,7 @@ class Board:
         print("Animation saved as video file")
 
     def animate(self, curr_move):
-        if len(curr_move) == 1:
+        if len(curr_move) == 2:
             if curr_move[0] == _X_:
                 plt.xlabel("Player X (Q-Player) won")
             elif curr_move[0] == _O_:
@@ -188,7 +202,7 @@ class Board:
             plt.xlabel("Reset for new game")
             self.plot_layout()
         else:
-            plt.xlabel("Game in progress")
+            plt.xlabel("Game in progress (T:{}, M:{})".format(curr_move[2][0], curr_move[2][1]))
             symbol = "-"
             color = "-"
             if curr_move[0] == _X_:
@@ -202,9 +216,18 @@ class Board:
                      fontweight='bold')
 
     def mat_pos_to_plot_pos(self, mat_pos):
+        """
+        converts cell position in the game board to corresponding coordinate in a 2D plot
+        :param mat_pos:
+        :return: tuple (x, y) coordinates
+        """
         return 2*mat_pos[0] + 1, (6 - (2*mat_pos[1] + 1))
 
     def board_to_hash(self):
+        """
+        converts the current state of board to a hash
+        :return: None
+        """
         # str(boardObj.board) : it's easier but string consumes much more memory
         return hash(tuple(map(tuple, self.board)))
 
@@ -227,5 +250,10 @@ class Board:
         return np.where(board_1d == _EMPTY_)[0]
 
     def pos_1d_to_2d(self, pos: int):
+        """
+        converts the board position represented in 1 dimensional array to corresponding 2D position
+        :param pos: position to be converted to 2D. type: int
+        :return: tuple (row, column)
+        """
         return (pos // BOARD_DIM[1], pos % BOARD_DIM[1])
 

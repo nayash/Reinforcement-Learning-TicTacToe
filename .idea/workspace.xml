@@ -2,17 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8dde9f80-ad48-4136-8b17-90536241bc35" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/PseudoRandomPlayer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Board.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Board.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/MinMaxPlayer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/MinMaxPlayer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/OtherPlayer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/RandomPlayer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PseudoRandomPlayer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/PseudoRandomPlayer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/QTPlayer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/QTPlayer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RandomPlayer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/RandomPlayer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/output/anim_data.pickle" beforeDir="false" afterPath="$PROJECT_DIR$/src/output/anim_data.pickle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/output/q_table.pickle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/output/q_table.pickle_0" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/output/q_table.pickle_1" beforeDir="false" afterPath="$PROJECT_DIR$/src/output/q_table.pickle_1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/output/training_games_trimmed.mp4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/script.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/script.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -34,8 +36,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/QTPlayer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="91" column="46" lean-forward="true" selection-start-line="91" selection-start-column="46" selection-end-line="91" selection-end-column="46" />
+            <state relative-caret-position="2064">
+              <caret line="91" column="46" selection-start-line="91" selection-start-column="46" selection-end-line="91" selection-end-column="46" />
             </state>
           </provider>
         </entry>
@@ -43,7 +45,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/MinMaxPlayer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
+            <state relative-caret-position="888">
               <caret line="42" column="8" selection-start-line="42" selection-start-column="8" selection-end-line="42" selection-end-column="44" />
             </state>
           </provider>
@@ -52,17 +54,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/RandomPlayer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="515">
-              <caret line="44" lean-forward="true" selection-end-line="44" />
+            <state relative-caret-position="984">
+              <caret line="44" selection-end-line="44" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Board.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-921">
-              <caret line="101" column="11" selection-start-line="101" selection-start-column="11" selection-end-line="101" selection-end-column="11" />
+            <state relative-caret-position="386">
+              <caret line="219" column="51" selection-start-line="219" selection-start-column="51" selection-end-line="219" selection-end-column="51" />
             </state>
           </provider>
         </entry>
@@ -71,16 +73,25 @@
         <entry file="file://$PROJECT_DIR$/src/script.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="216">
-              <caret line="9" column="25" selection-start-line="9" selection-start-column="25" selection-end-line="9" selection-end-column="25" />
+              <caret line="9" column="21" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="21" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/temp.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="4872">
+              <caret line="227" column="48" selection-start-line="227" selection-start-column="48" selection-end-line="227" selection-end-column="48" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="159">
-              <caret line="24" column="22" lean-forward="true" selection-start-line="24" selection-start-column="22" selection-end-line="24" selection-end-column="22" />
+            <state relative-caret-position="528">
+              <caret line="26" column="39" selection-start-line="26" selection-start-column="39" selection-end-line="26" selection-end-column="39" />
               <folding>
                 <element signature="e#420#457#0" expanded="true" />
               </folding>
@@ -91,8 +102,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/PseudoRandomPlayer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="192">
-              <caret line="36" column="9" selection-start-line="36" selection-start-column="9" selection-end-line="36" selection-end-column="9" />
+            <state relative-caret-position="816">
+              <caret line="38" column="50" selection-start-line="38" selection-start-column="50" selection-end-line="38" selection-end-column="50" />
               <folding>
                 <element signature="e#457#475#0" expanded="true" />
               </folding>
@@ -155,9 +166,10 @@
         <option value="$PROJECT_DIR$/src/QTPlayer.py" />
         <option value="$PROJECT_DIR$/src/MinMaxPlayer.py" />
         <option value="$PROJECT_DIR$/src/RandomPlayer.py" />
-        <option value="$PROJECT_DIR$/src/Board.py" />
-        <option value="$PROJECT_DIR$/src/Main.py" />
         <option value="$PROJECT_DIR$/src/PseudoRandomPlayer.py" />
+        <option value="$PROJECT_DIR$/src/Main.py" />
+        <option value="$PROJECT_DIR$/src/temp.py" />
+        <option value="$PROJECT_DIR$/src/Board.py" />
       </list>
     </option>
   </component>
@@ -166,16 +178,32 @@
       <scope name="Open Source" />
     </order>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="width" value="848" />
-    <option name="height" value="688" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="6" />
+    <option name="width" value="1340" />
+    <option name="height" value="735" />
   </component>
   <component name="ProjectView">
-    <navigator proportions="" version="1">
+    <navigator currentView="Scope" currentSubView="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope" proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope">
+        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
+          <expand>
+            <path>
+              <item name="RL_3T" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+            </path>
+            <path>
+              <item name="RL_3T" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="src" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -192,39 +220,11 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope">
-        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
-          <expand>
-            <path>
-              <item name="RL_3T" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-            </path>
-            <path>
-              <item name="RL_3T" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name=".idea" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="RL_3T" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name=".idea" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="copyright" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="RL_3T" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name=".idea" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="scopes" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="ignore_missing_gitignore" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../stock_pred" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="settings.editor.splitter.proportion" value="0.23442137" />
@@ -349,15 +349,15 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="6" y="0" width="1340" height="735" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15476191" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.1656051" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3289689" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.4942717" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.43535188" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39934534" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -450,17 +450,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/Board.py</url>
-          <line>89</line>
+          <line>90</line>
           <option name="timeStamp" value="19" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/Board.py</url>
-          <line>86</line>
+          <line>87</line>
           <option name="timeStamp" value="20" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/Board.py</url>
-          <line>84</line>
+          <line>85</line>
           <option name="timeStamp" value="21" />
         </line-breakpoint>
       </breakpoints>
@@ -511,20 +511,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/PlayerBase.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="888">
-          <caret line="37" selection-start-line="37" selection-end-line="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/script.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="9" column="25" selection-start-line="9" selection-start-column="25" selection-end-line="9" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="268">
@@ -532,51 +518,77 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/RandomPlayer.py">
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="515">
-          <caret line="44" lean-forward="true" selection-end-line="44" />
+        <state relative-caret-position="-5088" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/PlayerBase.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="888">
+          <caret line="37" selection-start-line="37" selection-end-line="37" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/QTPlayer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="91" column="46" lean-forward="true" selection-start-line="91" selection-start-column="46" selection-end-line="91" selection-end-column="46" />
+        <state relative-caret-position="2064">
+          <caret line="91" column="46" selection-start-line="91" selection-start-column="46" selection-end-line="91" selection-end-column="46" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/MinMaxPlayer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
+        <state relative-caret-position="888">
           <caret line="42" column="8" selection-start-line="42" selection-start-column="8" selection-end-line="42" selection-end-column="44" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Board.py">
+    <entry file="file://$PROJECT_DIR$/src/RandomPlayer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-921">
-          <caret line="101" column="11" selection-start-line="101" selection-start-column="11" selection-end-line="101" selection-end-column="11" />
+        <state relative-caret-position="984">
+          <caret line="44" selection-end-line="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/script.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="9" column="21" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="528">
+          <caret line="26" column="39" selection-start-line="26" selection-start-column="39" selection-end-line="26" selection-end-column="39" />
+          <folding>
+            <element signature="e#420#457#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/PseudoRandomPlayer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="36" column="9" selection-start-line="36" selection-start-column="9" selection-end-line="36" selection-end-column="9" />
+        <state relative-caret-position="816">
+          <caret line="38" column="50" selection-start-line="38" selection-start-column="50" selection-end-line="38" selection-end-column="50" />
           <folding>
             <element signature="e#457#475#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.py">
+    <entry file="file://$PROJECT_DIR$/src/temp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="24" column="22" lean-forward="true" selection-start-line="24" selection-start-column="22" selection-end-line="24" selection-end-column="22" />
-          <folding>
-            <element signature="e#420#457#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="4872">
+          <caret line="227" column="48" selection-start-line="227" selection-start-column="48" selection-end-line="227" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Board.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="386">
+          <caret line="219" column="51" selection-start-line="219" selection-start-column="51" selection-end-line="219" selection-end-column="51" />
         </state>
       </provider>
     </entry>

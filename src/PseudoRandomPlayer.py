@@ -14,9 +14,9 @@ help fixing playing same board state repeatedly.
 """
 import numpy as np
 
-from src.Board import Board
-from src.PlayerBase import PlayerBase
-from src.MinMaxPlayer import MinMaxPlayer
+from Board import Board
+from PlayerBase import PlayerBase
+from MinMaxPlayer import MinMaxPlayer
 
 
 class PseudoRandomPlayer(PlayerBase):

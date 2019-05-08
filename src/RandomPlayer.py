@@ -13,8 +13,8 @@ This is a Random player which plays with QTPlayer.
 """
 import numpy as np
 
-from src.Board import Board
-from src.PlayerBase import PlayerBase
+from Board import Board
+from PlayerBase import PlayerBase
 
 
 class RandomPlayer(PlayerBase):

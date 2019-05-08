@@ -5,9 +5,9 @@ This is just scratch pad.
 import pickle
 import numpy as np
 
-from src.Board import Board, NUM_CELLS, WIN_O, WIN_X, DRAW, _X_, _O_
-from src.QTPlayer import QTPlayer
-from src.MinMaxPlayer import MinMaxPlayer
+from Board import Board, NUM_CELLS, WIN_O, WIN_X, DRAW, _X_, _O_
+from QTPlayer import QTPlayer
+from MinMaxPlayer import MinMaxPlayer
 
 board = Board()
 q_player = QTPlayer()

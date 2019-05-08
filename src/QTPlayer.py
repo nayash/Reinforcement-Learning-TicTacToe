@@ -17,8 +17,8 @@ import pickle
 import numpy as np
 import time
 
-from src.Board import Board, NUM_CELLS, WIN_O, WIN_X, DRAW
-from src.PlayerBase import PlayerBase
+from Board import Board, NUM_CELLS, WIN_O, WIN_X, DRAW
+from PlayerBase import PlayerBase
 
 OUTPUT_PATH = ".\\output\\"
 OUTPUT_FILE_NAME = "q_table.pickle"
